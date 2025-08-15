@@ -47,13 +47,13 @@ const About = () => {
 
   const team = [
     {
-      name: "Sarah Chen",
+      name: "derek",
       role: "CEO & Co-Founder",
       bio: "Former Tesla Autopilot engineer with 10+ years in AI navigation systems.",
       image: "👩‍💼"
     },
     {
-      name: "Marcus Rodriguez",
+      name: "parse que",
       role: "CTO & Co-Founder", 
       bio: "Ex-Google Maps architect specializing in real-time traffic optimization.",
       image: "👨‍💻"
