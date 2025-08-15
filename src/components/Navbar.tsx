@@ -41,6 +41,10 @@ const Navbar = () => {
             Contact
             <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${location.pathname === '/contact' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
           </Link>
+          <Link to="/beta" className={`text-foreground hover:text-primary transition-colors duration-200 relative group ${location.pathname === '/beta' ? 'text-primary' : ''}`}>
+            Beta <span className="text-xs bg-primary text-primary-foreground px-1 py-0.5 rounded ml-1">NEW</span>
+            <span className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${location.pathname === '/beta' ? 'w-full' : 'w-0 group-hover:w-full'}`} />
+          </Link>
         </div>
 
         {/* CTA Buttons */}
@@ -79,6 +83,9 @@ const Navbar = () => {
             </Link>
             <Link to="/contact" className="block text-foreground hover:text-primary transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
               Contact
+            </Link>
+            <Link to="/beta" className="block text-foreground hover:text-primary transition-colors duration-200" onClick={() => setIsMenuOpen(false)}>
+              Beta <span className="text-xs bg-primary text-primary-foreground px-1 py-0.5 rounded ml-1">NEW</span>
             </Link>
             <div className="pt-4 space-y-2">
               <Button asChild variant="ghost" className="w-full justify-start">
