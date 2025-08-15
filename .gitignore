@@ -95,3 +95,6 @@ temp/
 
 # TypeScript cache
 *.tsbuildinfo
+
+# Backend (separate private repository)
+backend/

@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavigationMap from '@/components/NavigationMap';
 import ConversationInterface from '@/components/ConversationInterface';
 import TripStatusBar from '@/components/TripStatusBar';
 import Navbar from '@/components/Navbar';
 import { useTripContext } from '@/hooks/useTripContext';
 import { useToast } from '@/hooks/use-toast';
+import { apiService } from '@/services/api';
+import { Button } from '@/components/ui/button';
 
 const Navigator = () => {
   const { 
@@ -15,6 +17,7 @@ const Navigator = () => {
     findAlternateRoute 
   } = useTripContext();
   const { toast } = useToast();
+  const [backendStatus, setBackendStatus] = useState<string>('idle');
 
   const handleCommand = (command: string) => {
     const lowerCommand = command.toLowerCase();
@@ -67,6 +70,34 @@ const Navigator = () => {
     });
   };
 
+  const testBackendConnection = async () => {
+    setBackendStatus('testing');
+    try {
+      const response = await apiService.healthCheck();
+      if (response.success) {
+        setBackendStatus('connected');
+        toast({
+          title: "Backend Connected!",
+          description: "Successfully connected to NavigAIt backend",
+        });
+      } else {
+        setBackendStatus('error');
+        toast({
+          title: "Backend Error",
+          description: "Failed to connect to backend",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      setBackendStatus('error');
+      toast({
+        title: "Backend Error",
+        description: "Network error connecting to backend",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="relative w-full min-h-screen bg-background">
       <Navbar />
@@ -82,6 +113,20 @@ const Navigator = () => {
           onAlternateRoute={handleAlternateRoute}
           onEmergency={handleEmergency}
         />
+        
+        {/* Backend Test Button */}
+        <div className="absolute top-20 right-4 z-50">
+          <Button
+            onClick={testBackendConnection}
+            disabled={backendStatus === 'testing'}
+            variant={backendStatus === 'connected' ? 'default' : 'outline'}
+            size="sm"
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            {backendStatus === 'testing' ? 'Testing...' : 
+             backendStatus === 'connected' ? '✅ Backend' : '🔗 Test Backend'}
+          </Button>
+        </div>
         
         {/* Conversation Interface */}
         <ConversationInterface 
